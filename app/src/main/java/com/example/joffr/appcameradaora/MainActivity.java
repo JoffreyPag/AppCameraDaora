@@ -1,11 +1,16 @@
 package com.example.joffr.appcameradaora;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,13 +40,24 @@ public class MainActivity extends AppCompatActivity {
         imagemTela = (ImageView) findViewById(R.id.imagemTela);
     }
 
-    public void teste(View view) {
-        chamaCamera();
-    }
-
     public void chamaCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, TIRAR_FOTO);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for(int result : grantResults){
+            if(result == PackageManager.PERMISSION_DENIED){
+                //aLGUMA PERMISSAO FOI NEGADA
+                alertAndFinish();
+                return;
+            }
+        }
+        //se chegou aqui ta ok
     }
 
     @Override
@@ -51,13 +67,36 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     Bundle bundle = data.getExtras();
+                    //recupera o bitmap retornado pela camera
                     Bitmap bitmap = (Bitmap) bundle.get("data");
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "cam fechada", Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+    }
+
+    private void alertAndFinish(){
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("PermissionsExample").setMessage("Para utilizar este aplicativo, você precisa aceitar as permissões");
+            //add the buttons
+            builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
+            builder.setPositiveButton("Permitir", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 }

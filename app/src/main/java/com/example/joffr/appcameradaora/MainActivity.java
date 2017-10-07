@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
+   /* @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //se chegou aqui ta ok
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
     private void alertAndFinish(){
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -99,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+    */
 }

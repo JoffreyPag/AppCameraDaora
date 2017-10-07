@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button butCam, butpegaimg;
     ImageView imagemTela;
     private static final int TIRAR_FOTO = 1010;
+    Bitmap imagem;
 
     final String[] permissoes = new String[]{
             Manifest.permission.CAMERA,
@@ -46,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-   @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        for(int result : grantResults){
-            if(result == PackageManager.PERMISSION_DENIED){
+        for (int result : grantResults) {
+            if (result == PackageManager.PERMISSION_DENIED) {
                 //aLGUMA PERMISSAO FOI NEGADA
                 alertAndFinish();
                 return;
@@ -68,25 +69,30 @@ public class MainActivity extends AppCompatActivity {
                 if (data != null) {
                     Bundle bundle = data.getExtras();
                     //recupera o bitmap retornado pela camera
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    imagem = (Bitmap) bundle.get("data");
+                    trataAImagem();
                 }
             }
         }
     }
 
+    private void trataAImagem() {
+        imagemTela.setImageBitmap(imagem);
+    }
 
-    private void alertAndFinish(){
+
+    private void alertAndFinish() {
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("PermissionsExample").setMessage("Para utilizar este aplicativo, você precisa aceitar as permissões");
             //add the buttons
-            builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener(){
+            builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     finish();
                 }
             });
-            builder.setPositiveButton("Permitir", new DialogInterface.OnClickListener(){
+            builder.setPositiveButton("Permitir", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent();

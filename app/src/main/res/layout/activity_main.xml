@@ -9,60 +9,55 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="3">
 
         <Button
-            android:onClick="chamaCamera"
             android:id="@+id/butao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="70dp"
+            android:layout_marginTop="8dp"
+            android:onClick="chamaCamera"
+            android:text="Tirar foto"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/button"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="76dp"
+            android:layout_marginTop="8dp"
+            android:text="Pegar no banco"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/butao"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="7"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent" />
 
         <ImageView
             android:id="@+id/imagemTela"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/colorAccent"/>
-
+            android:layout_height="400dp"
+            android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 
 </LinearLayout>

@@ -35,7 +35,7 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException{
         //cria um nome do arquivo da imagem
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Jojo");
         pictureImagePath = storageDir.getAbsolutePath()+"/"+FILENAME;
         File image = new File(pictureImagePath);
 
@@ -56,6 +56,15 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
             cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(cameraIn, 1);
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            Toast.makeText(this, "imagem salva", Toast.LENGTH_SHORT).show();
         }
     }
 

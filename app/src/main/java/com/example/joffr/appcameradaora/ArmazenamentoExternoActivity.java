@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -56,8 +57,9 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
         }else{
             File file = createImageFile();
             //um erro aocntece aqui
+            Log.i("Erro", "Aqui?");
             Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + ".provider",file);
-            //Log.i("Salvando", file.getAbsolutePath());
+            Log.i("Salvando", file.getAbsolutePath());
             Intent cameraIn = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(cameraIn, 1);

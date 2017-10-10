@@ -2,13 +2,16 @@ package com.example.joffr.appcameradaora;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +57,40 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
             File file = createImageFile();
             Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + "provider",file);
             //Log.i("Salvando", file.getAbsolutePath());
-            Intent cameraIn = new Intent();
+            Intent cameraIn = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            startActivityForResult(cameraIn, 1);
+
+            /*
+            Esse codigo nao funciona no nougat já que os arquivos uri nao podem mais serem expostos. Use
+            um ile provider para android N
+             */
+
+            /*
+            File storageDir = Enviroment.getExternalPublishDirectory(Environment.DIRECTORY_DCIM);
+            pictureImagePath = storageDir.getAbsolutePath() + "/Camera" + FILENAME;
+            File file = new File(pictureImagePath);
+            Uri outputFileUri = Uri.fromFile(file);
+            Intent cameraIn = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            startActivityForResult(cameraIn, 1);
+             */
+        }
+    }
+
+    public void lerFotoExterna(View view) throws IOException{
+        if (checkStorage() == false){
+            Toast.makeText(this, "Storage is busy", Toast.LENGTH_SHORT).show();
+            return;
+        } else{
+            File imgFile = createImageFile();
+
+            //Log.i("Imagem, imgFile.getAbsolutePath());
+            if (imgFile.exists()){
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                //Log.i("Testes"," Arquivo: "+imgFile);
+                imageView.setImageBitmap(myBitmap);
+            }
         }
     }
 

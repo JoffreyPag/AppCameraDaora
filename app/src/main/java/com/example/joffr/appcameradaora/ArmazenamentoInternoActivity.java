@@ -31,7 +31,7 @@ public class ArmazenamentoInternoActivity extends AppCompatActivity {
 
     public void tirarFotoESalvar(View view) {
         //import da biblioteca android.provider.MediaStore lá em cima
-        Intent cameraInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraInt = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraInt, 1);
     }
 

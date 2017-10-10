@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class ArmazenamentoExternoActivity extends AppCompatActivity {
 
-    String FILENAME = "phtp_external.jpg";
+    String FILENAME = "photo_external.jpg";
     private String pictureImagePath = "";
     ImageView imageView;
     Bitmap img;
@@ -34,9 +34,8 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException{
         //cria um nome do arquivo da imagem
-        String cam = "Camera";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
-        pictureImagePath = storageDir.getPath()+"/"+FILENAME;
+        pictureImagePath = storageDir.getAbsolutePath()+"/"+FILENAME;
         File image = new File(pictureImagePath);
         /*Isso não foi necessario sendo que eu precisava apenas consertar o nome para a imagem e o
         metodo crateTempFile add o integer aleatorio no fim do nome do arquivo*/
@@ -52,10 +51,12 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
 
     public  void tirarFotoESalvarExternamente(View view) throws IOException{
         if (checkStorage() == false){
+            Toast.makeText(this, "false", Toast.LENGTH_SHORT).show();
             return;
         }else{
             File file = createImageFile();
-            Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + "provider",file);
+            //um erro aocntece aqui
+            Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + ".provider",file);
             //Log.i("Salvando", file.getAbsolutePath());
             Intent cameraIn = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
@@ -96,9 +97,9 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
 
     public boolean checkStorage(){
         if (!isExternalStorageAvailable() || isExternalStorageReadOnly()){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private static boolean isExternalStorageReadOnly(){

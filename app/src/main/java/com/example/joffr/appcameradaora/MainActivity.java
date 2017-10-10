@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String[] permissoes = new String[]{
+    private static String[] permissoes = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         b1 = (Button) findViewById(R.id.button);
         b2 = (Button) findViewById(R.id.button2);
         b3 = (Button) findViewById(R.id.button3);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PermissionUtils.validate(MainActivity.this, 0, permissoes);
     }
 
     public void vaiProInterno(View view) {
@@ -74,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
     private void alertAndFinish() {
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("PermissionsExample").setMessage("Para utilizar este aplicativo, você precisa aceitar as permissões");
+            builder.setTitle(R.string.app_name).setMessage("Para utilizar este aplicativo, você precisa aceitar as permissões");
             //add the buttons
             builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
+                    //nao fazer nada as vezes é melhor
                 }
             });
             builder.setPositiveButton("Permitir", new DialogInterface.OnClickListener() {
@@ -97,10 +103,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        PermissionUtils.validate(MainActivity.this, 0, permissoes);
-    }
 //==================================================================================================
 }

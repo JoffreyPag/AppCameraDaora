@@ -38,14 +38,6 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
         pictureImagePath = storageDir.getAbsolutePath()+"/"+FILENAME;
         File image = new File(pictureImagePath);
-        /*Isso não foi necessario sendo que eu precisava apenas consertar o nome para a imagem e o
-        metodo crateTempFile add o integer aleatorio no fim do nome do arquivo*/
-
-        //File image = File.createTempFile(
-        //  FILENAME, /* prefix */
-        //  ".jpg", /*suffix*/
-        //  storageDir /*directory*/
-        //);
 
         return image;
     }
@@ -56,7 +48,7 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
             return;
         }else{
             File file = createImageFile();
-            //um erro aocntece aqui
+            //um erro acontece aqui
             Log.i("Erro", "Aqui?");
             Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + ".provider",file);
             Log.i("Salvando", file.getAbsolutePath());
@@ -64,20 +56,6 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
             cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(cameraIn, 1);
 
-            /*
-            Esse codigo nao funciona no nougat já que os arquivos uri nao podem mais serem expostos. Use
-            um ile provider para android N
-             */
-
-            /*
-            File storageDir = Enviroment.getExternalPublishDirectory(Environment.DIRECTORY_DCIM);
-            pictureImagePath = storageDir.getAbsolutePath() + "/Camera" + FILENAME;
-            File file = new File(pictureImagePath);
-            Uri outputFileUri = Uri.fromFile(file);
-            Intent cameraIn = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraIn.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            startActivityForResult(cameraIn, 1);
-             */
         }
     }
 

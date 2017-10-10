@@ -15,21 +15,23 @@ import java.util.List;
 
 public class PermissionUtils {
 
-    public static boolean validate(Activity activity, int requestCode, String... permissions){
+    public static boolean validate(Activity activity, int requestCode, String... permissions) {
         List<String> permissionToRequest = new ArrayList<>();
 
-        for(String permission : permissions){
+        for (String permission : permissions) {
             //verifica se tem a permissao
-            if(ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
                 //verifica se alguma vez o usuario já negou permissao e precisa-se dar outra explicação
-                if(ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                     Toast.makeText(activity, "é Preciso que seja aceito", Toast.LENGTH_SHORT).show();
+                    permissionToRequest.add(permission);
+                } else {
                     permissionToRequest.add(permission);
                 }
             }
         }
 
-        if (permissionToRequest.isEmpty()){
+        if (permissionToRequest.isEmpty()) {
             //tudo ok retorna true
             return true;
         }

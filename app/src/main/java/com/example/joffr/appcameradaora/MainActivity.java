@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.Manifest;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,100 +27,34 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button butCam, butpegaimg;
-    ImageView imagemTela;
-    private static final int TIRAR_FOTO = 1010;
-    Bitmap imagem;
-
     final String[] permissoes = new String[]{
-            Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-
-    String mCurrentPhotoPath;
+    Button b1, b2, b3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        butCam = (Button) findViewById(R.id.butao);
-        butpegaimg = (Button) findViewById(R.id.button2);
-
-        imagemTela = (ImageView) findViewById(R.id.imagemTela);
+        b1 = (Button) findViewById(R.id.button);
+        b2 = (Button) findViewById(R.id.button2);
+        b3 = (Button) findViewById(R.id.button3);
     }
 
-    public void chamaCamera(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, TIRAR_FOTO);
-        //dispatchTakePictureIntent();
+    public void vaiProInterno(View view) {
+        startActivity(new Intent(this, ArmazenamentoInternoActivity.class));
     }
 
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TIRAR_FOTO) {
-            if (resultCode == RESULT_OK) {
-                if (data != null) {
-                    Bundle bundle = data.getExtras();
-                    //recupera o bitmap retornado pela camera
-                    imagem = (Bitmap) bundle.get("data");
-                    trataAImagem();
-                }
-            }
-        }
+    public void vaiProExterno(View view){
+        startActivity(new Intent(this, ArmazenamentoExternoActivity.class));
     }
 
-    private void trataAImagem() {
-        imagemTela.setImageBitmap(imagem);
+    public void vaiProBanco(View view){
+        Toast.makeText(this, "Ainda não implementado camarada", Toast.LENGTH_SHORT).show();
     }
-
-
-/*
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.joffr.appcameradaora",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, TIRAR_FOTO);
-            }
-        }
-    }
-*/
-
 //=======================================TRATAMENTO DE PERMISSOES===================================
 
     @Override
@@ -165,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        PermissionUtils.validate(this, 0, permissoes);
+        PermissionUtils.validate(MainActivity.this, 0, permissoes);
     }
 //==================================================================================================
 }

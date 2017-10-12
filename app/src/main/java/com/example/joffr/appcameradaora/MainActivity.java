@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void vaiProBanco(View view){
-        Toast.makeText(this, "Ainda não implementado camarada", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, ArmazenamentoBancoActivity.class));
     }
 //=======================================TRATAMENTO DE PERMISSOES===================================
 

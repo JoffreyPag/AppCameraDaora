@@ -48,8 +48,6 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
             return;
         }else{
             File file = createImageFile();
-            //um erro acontece aqui
-            Log.i("Erro", "Aqui?");
             Uri outputFileUri = FileProvider.getUriForFile(ArmazenamentoExternoActivity.this, BuildConfig.APPLICATION_ID + ".provider",file);
             Log.i("Salvando", file.getAbsolutePath());
             Intent cameraIn = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

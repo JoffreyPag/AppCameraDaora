@@ -75,10 +75,11 @@ public class ArmazenamentoExternoActivity extends AppCompatActivity {
         } else{
             File imgFile = createImageFile();
 
-            //Log.i("Imagem, imgFile.getAbsolutePath());
+            Log.i("Imagem", imgFile.getAbsolutePath());
+            Log.i("Existe?", ""+imgFile.exists());
             if (imgFile.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                //Log.i("Testes"," Arquivo: "+imgFile);
+                Log.i("Testes"," Arquivo: "+imgFile);
                 imageView.setImageBitmap(myBitmap);
             }
         }
